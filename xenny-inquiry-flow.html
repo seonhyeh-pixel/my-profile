@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xenny 문의 · 사용자 플로우 (Hi-fi)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css">
+<style>
+:root{
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;
+  --grad:linear-gradient(120deg,#FF9E6B 0%,#FF74A2 52%,#EA5BB0 100%);
+  --page:#F3F4F6; --panel:#FFFFFF; --ink:#1E2024; --sub:#6C727B; --border:#E4E6EA;
+  --board-bg:#FAFBFC; --dot:#E6E8ED; --wire:#7B8593; --wlbl:#464C56; --halo:#FAFBFC;
+  --accent:#EA5BB0;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --page:#131519; --panel:#1C1F24; --ink:#E7E9EC; --sub:#9AA1AB; --border:#2A2E35;
+    --board-bg:#16181C; --dot:#25282F; --wire:#6E7883; --wlbl:#C4CAD3; --halo:#16181C;
+    --accent:#F07EC0;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--sans);color:var(--ink);background:var(--page);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 60px;}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px;}
+h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
+.sub{font-size:15px;line-height:1.65;color:var(--sub);margin:0 0 20px;max-width:62ch;}
+.legend{display:flex;flex-wrap:wrap;gap:12px 20px;padding:13px 16px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:22px;}
+.leg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--sub);}
+.leg i{color:var(--accent);font-size:16px}
+.board-scroll{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--board-bg);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.1px);background-size:22px 22px;}
+.board{position:relative;width:1500px;height:1210px;}
+.wires{position:absolute;inset:0;width:1500px;height:1210px;pointer-events:none;}
+.node{position:absolute;}
+.cap{margin-top:11px;width:212px;text-align:center;}
+.cap b{display:block;font-size:13px;font-weight:600;color:var(--ink);}
+.cap span{display:block;font-size:11px;line-height:1.45;color:var(--sub);margin-top:3px;}
+.foot{margin-top:22px;font-size:11.5px;color:var(--sub);}
+.foot a{color:var(--accent);}
+
+/* ---- phone (Xenny hi-fi) ---- */
+.phone{width:212px;min-height:462px;background:#fff;border-radius:26px;overflow:hidden;border:1px solid #E7E8EA;display:flex;flex-direction:column;color:#1B1B1F;box-shadow:0 8px 26px rgba(30,25,50,.10);}
+.phone i.ti{line-height:1;}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:9px 17px 3px;font-size:12px;font-weight:600;}
+.sb .r{display:flex;gap:6px;align-items:center;font-size:13px;}
+.ab{display:flex;align-items:center;gap:8px;padding:11px 12px 9px;}
+.ab .t{font-size:15.5px;font-weight:600;flex:1;}
+.pbody{padding:2px 15px 13px;flex:1;display:flex;flex-direction:column;}
+.cta{margin:auto 15px 12px;height:50px;border-radius:15px;background:var(--grad);color:#fff;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.ctaoff{background:#F6D3DE;}
+.home{width:112px;height:4px;border-radius:2px;background:#1B1B1F;opacity:.82;margin:0 auto 9px;}
+.pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;display:inline-block;}
+.done{background:#FFEDF2;color:#E24E86;}
+.wait{background:#F2F3F5;color:#8A9096;}
+.pcard{border:1px solid #F0F1F3;border-radius:15px;padding:13px;background:#fff;}
+.lbl{font-size:12px;font-weight:600;}
+.hint{font-size:11px;color:#B0B4BA;}
+.field{border:1px solid #EAEBED;border-radius:12px;padding:11px;font-size:12.5px;line-height:1.55;}
+.field.focus{border:1.5px solid #FF74A2;}
+.field.err{border:1.5px solid #F0384E;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Xenny · 문의(상담) MVP</p>
+  <h1>문의 기능 — 사용자 플로우</h1>
+  <p class="sub">로그인 사용자가 문의를 등록하고 답변을 확인하기까지의 흐름을 디자인 시안과 함께 정리했습니다. 화면 옆 화살표는 화면 전환, 캡션은 화면별 핵심 규칙입니다. 범위는 사용자 앱입니다.</p>
+
+  <div class="legend">
+    <span class="leg"><i class="ti ti-arrow-right"></i> 정상 전환</span>
+    <span class="leg"><i class="ti ti-arrow-back-up"></i> 되돌아가기 · 루프 (점선)</span>
+    <span class="leg"><i class="ti ti-bell-ringing"></i> 외부 진입 (푸시/인앱 알림)</span>
+  </div>
+
+  <div class="board-scroll">
+  <div class="board">
+
+    <svg class="wires" viewBox="0 0 1500 1210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M2 1 L8 5 L2 9" fill="none" stroke="context-stroke" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <style>
+        .aw{fill:none;stroke:var(--wire);stroke-width:2.1;}
+        .awd{fill:none;stroke:var(--wire);stroke-width:2;stroke-dasharray:6 5;}
+        .al{fill:var(--wlbl);font:600 12.5px var(--sans);paint-order:stroke;stroke:var(--halo);stroke-width:4.5px;stroke-linejoin:round;}
+        .am{fill:var(--sub);font:500 11px var(--sans);paint-order:stroke;stroke:var(--halo);stroke-width:4.5px;stroke-linejoin:round;}
+      </style>
+
+      <line class="aw" x1="10" y1="302" x2="38" y2="302" marker-end="url(#ah)"/>
+      <text class="am" x="11" y="290">더보기 › 내 문의</text>
+
+      <line class="aw" x1="252" y1="302" x2="338" y2="302" marker-end="url(#ah)"/>
+      <text class="al" x="295" y="291" text-anchor="middle">문의하기</text>
+
+      <line class="aw" x1="552" y1="302" x2="638" y2="302" marker-end="url(#ah)"/>
+      <text class="al" x="595" y="291" text-anchor="middle">등록 성공</text>
+
+      <line class="aw" x1="746" y1="548" x2="746" y2="636" marker-end="url(#ah)"/>
+      <text class="al" x="754" y="597" text-anchor="start">자동 이동</text>
+
+      <line class="aw" x1="446" y1="548" x2="446" y2="636" marker-end="url(#ah)"/>
+      <text class="al" x="454" y="597" text-anchor="start">글자수 초과</text>
+
+      <path class="awd" d="M340,792 C296,702 296,410 338,360" marker-end="url(#ah)"/>
+      <text class="al" x="286" y="604" text-anchor="middle">수정</text>
+
+      <path class="aw" d="M852,702 L1044,550" marker-end="url(#ah)"/>
+      <text class="al" x="906" y="662" text-anchor="middle">대기 문의 탭</text>
+
+      <line class="aw" x1="852" y1="872" x2="938" y2="872" marker-end="url(#ah)"/>
+      <text class="al" x="895" y="861" text-anchor="middle">완료 문의 탭</text>
+
+      <line class="aw" x1="1240" y1="866" x2="1156" y2="866" marker-end="url(#ah)"/>
+      <text class="al" x="1198" y="851" text-anchor="middle">알림 탭</text>
+
+      <path class="awd" d="M1046,1118 L1046,1152" marker-end="url(#ah)"/>
+      <text class="al" x="1046" y="1172" text-anchor="middle">추가 문의 → 신규 문의(②)</text>
+    </svg>
+
+    <!-- 1. 목록 빈 -->
+    <div class="node" style="left:40px;top:70px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">내 문의</span></div>
+        <div class="pbody" style="align-items:center;justify-content:center;text-align:center;gap:13px;">
+          <div style="width:82px;height:82px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;"><i class="ti ti-messages" style="font-size:38px;color:#fff"></i></div>
+          <p style="margin:0;font-size:15px;font-weight:600;">아직 남긴 문의가 없어요</p>
+          <p style="margin:0;font-size:12px;color:#8A9096;line-height:1.6;">궁금한 점을 남기면<br>운영진이 확인 후 답변해 드려요</p>
+        </div>
+        <div class="cta">문의하기</div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>1 · 내 문의 (빈 상태)</b><span>본인 문의만 조회 · 첫 문의 유도</span></div>
+    </div>
+
+    <!-- 2. 작성 -->
+    <div class="node" style="left:340px;top:70px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-x" style="font-size:20px"></i><span class="t">문의하기</span></div>
+        <div class="pbody" style="gap:16px;padding-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span class="lbl">제목</span><span class="hint">10 / 200</span></div>
+            <div class="field focus">슈퍼하트 결제 오류</div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span class="lbl">내용</span><span class="hint">31 / 2000</span></div>
+            <div class="field" style="flex:1;">슈퍼하트를 결제했는데 하트가 충전되지 않았어요.</div>
+          </div>
+        </div>
+        <div class="cta" style="margin-top:4px;">등록</div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>2 · 문의 작성</b><span>제목 ≤200 · 내용 ≤2000 · 카테고리/첨부 없음</span></div>
+    </div>
+
+    <!-- 3. 작성 에러 -->
+    <div class="node" style="left:340px;top:640px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-x" style="font-size:20px"></i><span class="t">문의하기</span></div>
+        <div class="pbody" style="gap:16px;padding-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span class="lbl">제목</span><span class="hint" style="color:#F0384E;">201 / 200</span></div>
+            <div class="field err">슈퍼하트 결제 오류 관련해서 자세히 문의드리고 싶은데 제목이 너무 길어져서…</div>
+            <p style="margin:7px 2px 0;font-size:11px;color:#F0384E;display:flex;align-items:center;gap:4px;"><i class="ti ti-alert-circle" style="font-size:13px"></i>제목은 200자까지 입력할 수 있어요</p>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span class="lbl">내용</span><span class="hint">31 / 2000</span></div>
+            <div class="field" style="flex:1;">슈퍼하트를 결제했는데 하트가 충전되지 않았어요.</div>
+          </div>
+        </div>
+        <div class="cta ctaoff" style="margin-top:4px;">등록</div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>3 · 작성 · 글자수 초과</b><span>초과 시 등록 비활성 (인수 조건)</span></div>
+    </div>
+
+    <!-- 4. 등록 완료 토스트 -->
+    <div class="node" style="left:640px;top:70px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">내 문의</span></div>
+        <div class="pbody" style="background:#FAFAFB;gap:11px;padding-top:12px;position:relative;">
+          <div class="pcard" style="opacity:.55;"><div style="height:9px;width:60%;background:#E4E7EB;border-radius:4px;"></div><div style="height:6px;width:80%;background:#EEF0F2;border-radius:3px;margin-top:9px;"></div></div>
+          <div class="pcard" style="opacity:.55;"><div style="height:9px;width:52%;background:#E4E7EB;border-radius:4px;"></div><div style="height:6px;width:40%;background:#EEF0F2;border-radius:3px;margin-top:9px;"></div></div>
+          <div style="margin-top:auto;display:flex;align-items:center;gap:8px;background:#1B1B1F;color:#fff;border-radius:13px;padding:12px 14px;">
+            <span style="width:20px;height:20px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;flex:none;"><i class="ti ti-check" style="font-size:13px;color:#fff"></i></span>
+            <span style="font-size:12.5px;font-weight:600;">문의가 등록되었어요</span>
+          </div>
+        </div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>4 · 등록 완료 (토스트)</b><span>OPEN(답변 대기)로 생성</span></div>
+    </div>
+
+    <!-- 5. 목록 리스트 -->
+    <div class="node" style="left:640px;top:640px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">내 문의</span></div>
+        <div class="pbody" style="background:#FAFAFB;gap:11px;padding-top:12px;">
+          <div class="pcard">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:600;">슈퍼하트 결제 오류</span><span class="pill wait">답변 대기</span></div>
+            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 15일 등록</p>
+          </div>
+          <div class="pcard">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:600;">매칭 상대 신고 문의</span><span class="pill done">답변 완료</span></div>
+            <p style="margin:8px 0 0;font-size:12px;color:#8A9096;line-height:1.5;">신고해 주신 프로필은 검토 후 이용…</p>
+            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 12일 등록 · 7월 13일 답변</p>
+          </div>
+        </div>
+        <div class="cta">문의하기</div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>5 · 내 문의 (목록)</b><span>제목·상태·등록일·답변일·답변 미리보기</span></div>
+    </div>
+
+    <!-- 6. 상세 대기 -->
+    <div class="node" style="left:940px;top:70px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">문의 상세</span></div>
+        <div class="pbody" style="gap:13px;padding-top:8px;">
+          <span class="pill wait" style="align-self:flex-start;">답변 대기</span>
+          <div><p style="margin:0;font-size:16px;font-weight:600;">슈퍼하트 결제 오류</p><p style="margin:6px 0 0;font-size:11px;color:#B0B4BA;">7월 15일 등록</p></div>
+          <div style="border-top:1px solid #F0F1F3;padding-top:13px;"><p style="margin:0;font-size:12px;color:#B0B4BA;font-weight:600;">문의 내용</p><p style="margin:8px 0 0;font-size:12.5px;line-height:1.65;">슈퍼하트를 결제했는데 하트가 충전되지 않았어요.</p></div>
+          <div style="margin-top:auto;background:#FFF6F1;border-radius:15px;padding:20px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px;">
+            <i class="ti ti-clock-hour-3" style="font-size:25px;color:#FF8FB0"></i>
+            <p style="margin:0;font-size:11.5px;color:#8A9096;line-height:1.55;">운영진이 확인하고 있어요<br>답변이 도착하면 알림으로 알려드려요</p>
+          </div>
+        </div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>6 · 상세 · 답변 대기</b><span>입력창 없음 (단건 처리) · OPEN</span></div>
+    </div>
+
+    <!-- 7. 상세 완료 -->
+    <div class="node" style="left:940px;top:640px;">
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+        <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">문의 상세</span></div>
+        <div class="pbody" style="gap:12px;padding-top:8px;">
+          <span class="pill done" style="align-self:flex-start;">답변 완료</span>
+          <div><p style="margin:0;font-size:16px;font-weight:600;">매칭 상대 신고 문의</p><p style="margin:6px 0 0;font-size:11px;color:#B0B4BA;">7월 12일 등록</p></div>
+          <div style="border-top:1px solid #F0F1F3;padding-top:12px;"><p style="margin:0;font-size:12px;color:#B0B4BA;font-weight:600;">문의 내용</p><p style="margin:7px 0 0;font-size:12.5px;line-height:1.6;">부적절한 프로필을 신고했는데 어떻게 처리되나요?</p></div>
+          <div style="background:#FFF4EE;border:1px solid #FBE0D5;border-radius:15px;padding:13px;">
+            <div style="display:flex;align-items:center;gap:7px;"><span style="width:21px;height:21px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;"><i class="ti ti-headset" style="font-size:12px;color:#fff"></i></span><span style="font-size:12px;font-weight:600;color:#E24E86;">운영자 답변</span></div>
+            <p style="margin:9px 0 0;font-size:12.5px;line-height:1.6;">신고해 주신 프로필은 검토 후 이용 제한 조치했어요. 감사합니다.</p>
+            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 13일 답변</p>
+          </div>
+          <div style="margin-top:auto;text-align:center;padding-top:4px;"><span style="font-size:12.5px;font-weight:600;color:#E24E86;">추가 문의 작성하기</span></div>
+        </div>
+        <div class="home"></div>
+      </div>
+      <div class="cap"><b>7 · 상세 · 답변 완료</b><span>운영자 답변·답변일 · 이름 미노출 · 재답변 X</span></div>
+    </div>
+
+    <!-- 알림 (external) -->
+    <div class="node" style="left:1240px;top:820px;width:220px;">
+      <div style="width:220px;background:#fff;border:1px dashed #D9C2CC;border-radius:16px;padding:14px;display:flex;align-items:center;gap:11px;box-shadow:0 8px 26px rgba(30,25,50,.10);">
+        <span style="width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;flex:none;"><i class="ti ti-bell-ringing" style="font-size:19px;color:#fff"></i></span>
+        <div style="min-width:0;"><p style="margin:0;font-size:12.5px;font-weight:600;color:#1B1B1F;">운영진 답변이 도착했어요</p><p style="margin:3px 0 0;font-size:11px;color:#8A9096;line-height:1.4;">‘슈퍼하트 결제 오류’ 문의에 답변이 달렸어요</p></div>
+      </div>
+      <div class="cap" style="width:220px;"><b>알림 · 답변 도착</b><span>답변 등록 시 큐 적재 → 탭 시 상세로</span></div>
+    </div>
+
+  </div>
+  </div>
+
+  <p class="foot">범위 외 · 어드민(Xenny-Admin) · Xenny-Api/알림 큐 등 백엔드 · 실시간 채팅형 상담 · ANSWERED 상태(MVP 미사용) &nbsp;·&nbsp; Source: 문의(상담) MVP PRD · 사용자 앱</p>
+</div>
+</body>
+</html>
