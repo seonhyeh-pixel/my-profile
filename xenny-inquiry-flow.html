@@ -49,13 +49,28 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
 .ab{display:flex;align-items:center;gap:8px;padding:11px 12px 9px;}
 .ab .t{font-size:15.5px;font-weight:600;flex:1;}
 .pbody{padding:2px 15px 13px;flex:1;display:flex;flex-direction:column;}
-.cta{margin:auto 15px 12px;height:50px;border-radius:15px;background:var(--grad);color:#fff;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;}
-.ctaoff{background:#F6D3DE;}
+.cta{margin:auto 15px 12px;height:50px;border-radius:999px;background:#141414;color:#fff;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.ctaoff{background:#D9DBDF;}
 .home{width:112px;height:4px;border-radius:2px;background:#1B1B1F;opacity:.82;margin:0 auto 9px;}
-.pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;display:inline-block;}
-.done{background:#FFEDF2;color:#E24E86;}
+.pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;}
+.done{background:#FFE3ED;color:#D63A82;}
 .wait{background:#F2F3F5;color:#8A9096;}
 .pcard{border:1px solid #F0F1F3;border-radius:15px;padding:13px;background:#fff;}
+.litem{display:flex;gap:9px;align-items:flex-start;padding:14px 2px;}
+.litem+.litem{border-top:1px solid #F1F2F4;}
+.ll{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.lr{display:flex;flex-direction:column;align-items:flex-end;gap:7px;white-space:nowrap;}
+.ttl{font-size:14px;font-weight:600;}
+.prev{font-size:12px;color:#8A9096;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dt{font-size:11px;color:#B0B4BA;}
+.drow{display:flex;gap:14px;padding:12px 0;border-top:1px solid #EFF0F2;}
+.dk{width:54px;flex:none;font-size:12px;color:#9CA3AA;}
+.dv{font-size:13.5px;font-weight:600;}
+.dsec{border-top:1px solid #EFF0F2;padding:13px 0;}
+.dlbl{font-size:12px;color:#9CA3AA;display:flex;align-items:center;gap:5px;}
+.dlbl.op{color:#D63A82;font-weight:600;}
+.dbd{font-size:12.5px;line-height:1.65;margin-top:8px;}
+.ansB{background:#FFF6F1;border-radius:14px;padding:12px;}
 .lbl{font-size:12px;font-weight:600;}
 .hint{font-size:11px;color:#B0B4BA;}
 .field{border:1px solid #EAEBED;border-radius:12px;padding:11px;font-size:12.5px;line-height:1.55;}
@@ -72,7 +87,7 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
   <div class="legend">
     <span class="leg"><i class="ti ti-arrow-right"></i> 정상 전환</span>
     <span class="leg"><i class="ti ti-arrow-back-up"></i> 되돌아가기 · 루프 (점선)</span>
-    <span class="leg"><i class="ti ti-bell-ringing"></i> 외부 진입 (푸시/인앱 알림)</span>
+    <span class="leg"><i class="ti ti-bell-ringing"></i> 외부 진입 (푸시 알림)</span>
   </div>
 
   <div class="board-scroll">
@@ -204,16 +219,9 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
       <div class="phone">
         <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
         <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">내 문의</span></div>
-        <div class="pbody" style="background:#FAFAFB;gap:11px;padding-top:12px;">
-          <div class="pcard">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:600;">슈퍼하트 결제 오류</span><span class="pill wait">답변 대기</span></div>
-            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 15일 등록</p>
-          </div>
-          <div class="pcard">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:600;">매칭 상대 신고 문의</span><span class="pill done">답변 완료</span></div>
-            <p style="margin:8px 0 0;font-size:12px;color:#8A9096;line-height:1.5;">신고해 주신 프로필은 검토 후 이용…</p>
-            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 12일 등록 · 7월 13일 답변</p>
-          </div>
+        <div class="pbody" style="padding-top:4px;">
+          <div class="litem"><div class="ll"><span class="ttl">슈퍼하트 결제 오류</span><span class="prev" style="color:#C4C8CE">아직 답변을 기다리고 있어요</span></div><div class="lr"><span class="pill wait"><i class="ti ti-clock" style="font-size:12px"></i>답변 대기</span><span class="dt">7월 15일</span></div></div>
+          <div class="litem"><div class="ll"><span class="ttl">매칭 상대 신고 문의</span><span class="prev">신고해 주신 프로필은 검토 후 이용…</span></div><div class="lr"><span class="pill done"><i class="ti ti-check" style="font-size:12px"></i>답변 완료</span><span class="dt">7월 13일</span></div></div>
         </div>
         <div class="cta">문의하기</div>
         <div class="home"></div>
@@ -227,7 +235,7 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
         <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
         <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">문의 상세</span></div>
         <div class="pbody" style="gap:13px;padding-top:8px;">
-          <span class="pill wait" style="align-self:flex-start;">답변 대기</span>
+          <span class="pill wait" style="align-self:flex-start;"><i class="ti ti-clock" style="font-size:12px"></i>답변 대기</span>
           <div><p style="margin:0;font-size:16px;font-weight:600;">슈퍼하트 결제 오류</p><p style="margin:6px 0 0;font-size:11px;color:#B0B4BA;">7월 15일 등록</p></div>
           <div style="border-top:1px solid #F0F1F3;padding-top:13px;"><p style="margin:0;font-size:12px;color:#B0B4BA;font-weight:600;">문의 내용</p><p style="margin:8px 0 0;font-size:12.5px;line-height:1.65;">슈퍼하트를 결제했는데 하트가 충전되지 않았어요.</p></div>
           <div style="margin-top:auto;background:#FFF6F1;border-radius:15px;padding:20px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px;">
@@ -245,16 +253,14 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
       <div class="phone">
         <div class="sb"><span>9:41</span><span class="r"><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
         <div class="ab"><i class="ti ti-chevron-left" style="font-size:20px"></i><span class="t">문의 상세</span></div>
-        <div class="pbody" style="gap:12px;padding-top:8px;">
-          <span class="pill done" style="align-self:flex-start;">답변 완료</span>
-          <div><p style="margin:0;font-size:16px;font-weight:600;">매칭 상대 신고 문의</p><p style="margin:6px 0 0;font-size:11px;color:#B0B4BA;">7월 12일 등록</p></div>
-          <div style="border-top:1px solid #F0F1F3;padding-top:12px;"><p style="margin:0;font-size:12px;color:#B0B4BA;font-weight:600;">문의 내용</p><p style="margin:7px 0 0;font-size:12.5px;line-height:1.6;">부적절한 프로필을 신고했는데 어떻게 처리되나요?</p></div>
-          <div style="background:#FFF4EE;border:1px solid #FBE0D5;border-radius:15px;padding:13px;">
-            <div style="display:flex;align-items:center;gap:7px;"><span style="width:21px;height:21px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;"><i class="ti ti-headset" style="font-size:12px;color:#fff"></i></span><span style="font-size:12px;font-weight:600;color:#E24E86;">운영자 답변</span></div>
-            <p style="margin:9px 0 0;font-size:12.5px;line-height:1.6;">신고해 주신 프로필은 검토 후 이용 제한 조치했어요. 감사합니다.</p>
-            <p style="margin:9px 0 0;font-size:11px;color:#B0B4BA;">7월 13일 답변</p>
-          </div>
-          <div style="margin-top:auto;text-align:center;padding-top:4px;"><span style="font-size:12.5px;font-weight:600;color:#E24E86;">추가 문의 작성하기</span></div>
+        <div class="pbody" style="padding-top:8px;">
+          <span class="pill done"><i class="ti ti-check" style="font-size:12px"></i>답변 완료</span>
+          <p style="font-size:16px;font-weight:700;margin:11px 0 14px;">매칭 상대 신고 문의</p>
+          <div class="drow"><span class="dk">등록일</span><span class="dv">7월 12일</span></div>
+          <div class="drow"><span class="dk">답변일</span><span class="dv">7월 13일</span></div>
+          <div class="dsec"><span class="dlbl">문의 내용</span><p class="dbd">부적절한 프로필을 신고했는데 어떻게 처리되나요?</p></div>
+          <div class="ansB" style="margin-top:8px;"><span class="dlbl op"><i class="ti ti-headset" style="font-size:13px"></i>운영자 답변</span><p class="dbd">신고해 주신 프로필은 검토 후 이용 제한 조치했어요.</p></div>
+          <div style="margin-top:auto;text-align:center;padding-top:12px;"><span style="font-size:12.5px;font-weight:600;color:#D63A82;">추가 문의 작성하기</span></div>
         </div>
         <div class="home"></div>
       </div>
@@ -263,11 +269,11 @@ h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;}
 
     <!-- 알림 (external) -->
     <div class="node" style="left:1240px;top:820px;width:220px;">
-      <div style="width:220px;background:#fff;border:1px dashed #D9C2CC;border-radius:16px;padding:14px;display:flex;align-items:center;gap:11px;box-shadow:0 8px 26px rgba(30,25,50,.10);">
-        <span style="width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;flex:none;"><i class="ti ti-bell-ringing" style="font-size:19px;color:#fff"></i></span>
-        <div style="min-width:0;"><p style="margin:0;font-size:12.5px;font-weight:600;color:#1B1B1F;">운영진 답변이 도착했어요</p><p style="margin:3px 0 0;font-size:11px;color:#8A9096;line-height:1.4;">‘슈퍼하트 결제 오류’ 문의에 답변이 달렸어요</p></div>
+      <div style="width:220px;background:#fff;border:1px dashed #D9C2CC;border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 26px rgba(30,25,50,.10);">
+        <span style="width:34px;height:34px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;flex:none;"><i class="ti ti-heart" style="font-size:18px;color:#fff"></i></span>
+        <div style="min-width:0;flex:1;"><div style="display:flex;justify-content:space-between;font-size:10px;color:#9CA3AA;"><span style="font-weight:600;color:#5A6068;">Xenny</span><span>지금</span></div><p style="margin:2px 0 0;font-size:12px;font-weight:600;color:#1B1B1F;">운영진 답변이 도착했어요</p><p style="margin:2px 0 0;font-size:10.5px;color:#8A9096;line-height:1.4;">‘슈퍼하트 결제 오류’ 문의에…</p></div>
       </div>
-      <div class="cap" style="width:220px;"><b>알림 · 답변 도착</b><span>답변 등록 시 큐 적재 → 탭 시 상세로</span></div>
+      <div class="cap" style="width:220px;"><b>푸시 알림 · 답변 도착</b><span>FCM 푸시 → 탭 시 상세 (인앱 알림함 없음)</span></div>
     </div>
 
   </div>
