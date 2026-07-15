@@ -1,0 +1,198 @@
+<title>Xenny 문의 프로토타입</title>
+<style>
+:root{--wbg:#F1F2F5;--wink:#1E2024;--wsub:#6C727B;--wcard:#fff;--wborder:#E4E6EA;}
+@media (prefers-color-scheme:dark){:root{--wbg:#141619;--wink:#E7E9EC;--wsub:#9AA1AB;--wcard:#1D2025;--wborder:#2A2E35;}}
+:root[data-theme="dark"]{--wbg:#141619;--wink:#E7E9EC;--wsub:#9AA1AB;--wcard:#1D2025;--wborder:#2A2E35;}
+:root[data-theme="light"]{--wbg:#F1F2F5;--wink:#1E2024;--wsub:#6C727B;--wcard:#fff;--wborder:#E4E6EA;}
+*{box-sizing:border-box}
+body{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.xp{--grad:linear-gradient(120deg,#FF9E6B,#FF74A2 52%,#EA5BB0);font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Malgun Gothic',sans-serif;background:var(--wbg);min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:34px 16px 44px;color:var(--wink)}
+.xp *{box-sizing:border-box}
+.htitle{text-align:center}
+.htitle h1{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.htitle p{margin:6px 0 0;font-size:13px;color:var(--wsub)}
+.ic{display:inline-block;vertical-align:middle}
+.chev{display:inline-block;width:7px;height:7px;border-right:1.7px solid currentColor;border-top:1.7px solid currentColor;transform:rotate(45deg)}
+.chevL{transform:rotate(225deg)}
+.xphone{width:300px;height:612px;background:#fff;border:1px solid #E4E6EA;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;color:#1B1B1F;box-shadow:0 12px 34px rgba(30,25,50,.16)}
+.xsb{display:flex;justify-content:space-between;align-items:center;padding:11px 18px 4px;font-size:12px;font-weight:600;flex:none}
+.xsb .r{display:flex;gap:5px;align-items:center;color:#1B1B1F}
+.xstage{position:relative;flex:1;overflow:hidden}
+.xscreen{position:absolute;inset:0;display:none;flex-direction:column}
+.xscreen.on{display:flex}
+.xab{display:flex;align-items:center;gap:9px;padding:12px 15px 9px;flex:none}
+.xab .t{font-weight:600;flex:1}
+.xab .bk{cursor:pointer;color:#40454B;display:flex;padding:2px}
+.xbody{flex:1;overflow-y:auto;padding:2px 16px 14px}
+.xcta{margin:8px 16px 14px;height:50px;border-radius:15px;background:var(--grad);color:#fff;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;border:none;width:calc(100% - 32px)}
+.xcta.off{background:#F2D6DF;cursor:not-allowed}
+.xhome{width:112px;height:4px;border-radius:2px;background:#1B1B1F;opacity:.8;margin:0 auto 9px;flex:none}
+.xpill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;display:inline-block}
+.xdone{background:#FFEDF2;color:#E24E86}
+.xwait{background:#F2F3F5;color:#8A9096}
+.xcard{width:100%;border:1px solid #F0F1F3;border-radius:15px;padding:13px;background:#fff;cursor:pointer;text-align:left;font-family:inherit}
+.xcard:hover{border-color:#F1B9CF}
+.xlab{font-size:12.5px;font-weight:600}
+.xhint{font-size:11px;color:#B0B4BA}
+.xfield{width:100%;border:1px solid #EAEBED;border-radius:12px;padding:11px;font-size:13px;line-height:1.55;font-family:inherit;color:#1B1B1F;background:#fff;resize:none}
+.xfield:focus{outline:none;border:1.5px solid #FF74A2}
+.xfield.err{border:1.5px solid #F0384E}
+.xerr{margin:7px 2px 0;font-size:11px;color:#F0384E;display:none;align-items:center;gap:4px}
+.xerr.show{display:flex}
+.xtoast{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;background:#1B1B1F;color:#fff;border-radius:13px;padding:12px 14px;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}
+.xtoast.show{opacity:1;transform:none}
+.xbanner{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:#FFF4F7;border:1px solid #FCE1EA;cursor:pointer;margin-bottom:11px;width:100%;text-align:left;font-family:inherit}
+.xicw{width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.xreset{font-size:12px;color:var(--wsub);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit}
+.xrow{display:flex;align-items:center;gap:8px;padding:14px 2px;font-size:14px}
+.xrow+.xrow{border-top:1px solid #F2F3F5}
+.xrow .rv{margin-left:auto;font-size:12.5px;color:#9CA3AA}
+.xrow .rc{margin-left:6px;color:#C4C8CE;display:flex}
+.xrow .rv+.rc{margin-left:6px}
+.xrow:not(.link) .rc{margin-left:auto}
+.xrow.link{cursor:pointer}
+.xrow.link:hover{color:#E24E86}
+.xgroup{border-top:8px solid #F5F6F8;margin:0 -16px;padding:0 16px}
+.xnav{display:flex;justify-content:space-around;align-items:center;border-top:1px solid #F0F1F3;padding:8px 0 5px;flex:none}
+.xnav div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:#B0B4BA;position:relative}
+.xnav .act{color:#1B1B1F}
+.dot{position:absolute;top:-1px;right:11px;width:6px;height:6px;border-radius:50%;background:#EA5BB0}
+</style>
+<h2 class="sr-only">Xenny 더보기에서 문의하기로 진입해 문의를 등록하고 답변을 확인하는 인터랙티브 프로토타입</h2>
+<div class="xp">
+  <div class="htitle"><h1>Xenny 문의 · 인터랙티브 프로토타입</h1><p>더보기 › 문의하기 로 눌러보며 흐름을 확인하세요</p></div>
+  <div class="xphone">
+    <div class="xsb"><span>9:41</span><span class="r"><span id="sb-wifi"></span><span id="sb-bat"></span></span></div>
+    <div class="xstage">
+      <div class="xscreen on" id="s-more">
+        <div class="xab"><span class="t" style="font-size:17px">더보기</span></div>
+        <div class="xbody" id="morebody" style="padding-bottom:4px"></div>
+        <div class="xnav" id="nav"></div>
+      </div>
+      <div class="xscreen" id="s-list">
+        <div class="xab"><span class="bk" id="list-back" aria-label="뒤로"><span class="chev chevL"></span></span><span class="t" style="font-size:15.5px">내 문의</span></div>
+        <div class="xbody" id="listbody"></div>
+        <button class="xcta" id="btn-new">문의하기</button>
+      </div>
+      <div class="xscreen" id="s-write">
+        <div class="xab"><span class="bk" id="write-close" aria-label="닫기"></span><span class="t" style="font-size:15.5px">문의하기</span></div>
+        <div class="xbody">
+          <div style="display:flex;justify-content:space-between;margin:6px 0 7px"><span class="xlab">제목</span><span class="xhint" id="tc">0 / 200</span></div>
+          <input class="xfield" id="ti" placeholder="문의 제목을 입력하세요">
+          <p class="xerr" id="terr"><span id="terr-ic"></span>제목은 200자까지 입력할 수 있어요</p>
+          <div style="display:flex;justify-content:space-between;margin:16px 0 7px"><span class="xlab">내용</span><span class="xhint" id="bc">0 / 2000</span></div>
+          <textarea class="xfield" id="bo" rows="7" placeholder="문의 내용을 입력하세요"></textarea>
+          <p class="xerr" id="berr"><span id="berr-ic"></span>내용은 2000자까지 입력할 수 있어요</p>
+        </div>
+        <button class="xcta off" id="btn-submit" disabled>등록</button>
+      </div>
+      <div class="xscreen" id="s-detail">
+        <div class="xab"><span class="bk" id="detail-back" aria-label="뒤로"><span class="chev chevL"></span></span><span class="t" style="font-size:15.5px">문의 상세</span></div>
+        <div class="xbody" id="detailbody"></div>
+      </div>
+      <div class="xtoast" id="toast"><span class="xicw" style="width:20px;height:20px" id="toast-ic"></span><span style="font-size:12.5px;font-weight:600">문의가 등록되었어요</span></div>
+    </div>
+    <div class="xhome"></div>
+  </div>
+  <button class="xreset" id="reset"><span id="reset-ic"></span>처음부터 다시</button>
+</div>
+<script>
+(function(){
+  var P={
+    user:'<path d="M12 12a4 4 0 100-8 4 4 0 000 8Z"/><path d="M5 20a7 7 0 0114 0"/>',
+    messages:'<path d="M4 5h16v10H8l-4 3V5Z"/><path d="M8 9h8M8 12h5"/>',
+    bell:'<path d="M6 9a6 6 0 1112 0c0 4 2 5 2 5H4s2-1 2-5Z"/><path d="M10 21a2 2 0 004 0"/>',
+    headset:'<path d="M4 13v-1a8 8 0 0116 0v1"/><path d="M4 13h3v6H6a2 2 0 01-2-2v-4Z"/><path d="M20 13h-3v6h1a2 2 0 002-2v-4Z"/>',
+    clock:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+    alert:'<circle cx="12" cy="12" r="8"/><path d="M12 8v5M12 15.5h.01"/>',
+    check:'<path d="M5 12l4 4 10-10"/>',
+    cards:'<rect x="4" y="7" width="12" height="13" rx="2"/><path d="M8 4h8a2 2 0 012 2v10"/>',
+    history:'<path d="M4 12a8 8 0 103-6.3"/><path d="M4 4v4h4"/><path d="M12 9v3.2l2.2 1.6"/>',
+    chat:'<path d="M4 12a8 8 0 118 8H5.5l.8-2.8A8 8 0 014 12Z"/>',
+    wifi:'<path d="M4 9.5a12 12 0 0116 0"/><path d="M7 12.5a8 8 0 0110 0"/><path d="M10 15.5a4 4 0 014 0"/><path d="M12 18.4h.01"/>',
+    x:'<path d="M6 6l12 12M18 6L6 18"/>',
+    refresh:'<path d="M20 11a8 8 0 10-2.3 6.4"/><path d="M20 5v5h-5"/>'
+  };
+  function ic(n,s,sw){return '<svg class="ic" viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="'+(sw||1.8)+'" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>';}
+  function bat(s){return '<svg class="ic" viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="16" height="9" rx="2.2"/><path d="M21 11.2v3"/><rect x="5" y="10" width="11" height="5" rx="1" fill="currentColor" stroke="none"/></svg>';}
+  var $=function(id){return document.getElementById(id);};
+
+  $('sb-wifi').innerHTML=ic('wifi',15);$('sb-bat').innerHTML=bat(20);
+  $('write-close').innerHTML=ic('x',20);
+  $('toast-ic').innerHTML=ic('check',13,2);
+  $('terr-ic').innerHTML=ic('alert',13);$('berr-ic').innerHTML=ic('alert',13);
+  $('reset-ic').innerHTML=ic('refresh',14);
+
+  var groups=[
+    [{l:'계정 정보'},{l:'구독관리',v:'무료 이용중'},{l:'선호하는 스타일'}],
+    [{l:'알림 설정'},{l:'내 추천코드(친구 초대)'}],
+    [{l:'공지사항'},{l:'도움말'},{l:'서비스 정책'},{l:'문의하기',id:'go-inquiry',bold:true}],
+    [{l:'앱 버전',v:'최신 버전 사용중'}]
+  ];
+  function renderMore(){
+    var h='';
+    h+='<div style="display:flex;align-items:center;gap:12px;padding:8px 2px 14px"><span class="xicw" style="width:48px;height:48px">'+ic('user',26)+'</span><div><p style="margin:0;font-size:16px;font-weight:600">winter2025</p><p style="margin:3px 0 0;font-size:12px;color:#8A9096">프로필 수정하기 ›</p></div></div>';
+    h+='<div style="display:flex;align-items:center;gap:10px;border-radius:14px;padding:14px;background:linear-gradient(120deg,#FCD9C4,#FBC7DA 55%,#F3B9DE)"><div style="flex:1"><p style="margin:0;font-size:13.5px;font-weight:700;color:#7A2B47">Xenny를 더 알차고 재밌게.</p><p style="margin:4px 0 0;font-size:11px;color:#9B4A63;line-height:1.45">저렴한 요금제로 연애를 준비해 볼까요?</p></div><span style="background:#fff;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;white-space:nowrap">시작하기 ›</span></div>';
+    groups.forEach(function(g){
+      h+='<div class="xgroup" '+(g===groups[0]?'style="margin-top:14px"':'')+'>';
+      g.forEach(function(r){
+        h+='<div class="xrow'+(r.id?' link':'')+'"'+(r.id?' id="'+r.id+'"':'')+(r.bold?' style="font-weight:600"':'')+'>'+r.l+(r.v?'<span class="rv">'+r.v+'</span>':'')+'<span class="rc"><span class="chev"></span></span></div>';
+      });
+      h+='</div>';
+    });
+    $('morebody').innerHTML=h;
+    $('go-inquiry').onclick=function(){renderList();show('list');};
+  }
+  function renderNav(){
+    $('nav').innerHTML='<div>'+ic('cards',21)+'오늘의 카드</div><div>'+ic('history',21)+'지난 카드</div><div>'+ic('chat',21)+'<span class="dot"></span>채팅</div><div class="act">'+ic('user',21)+'더보기</div>';
+  }
+
+  var seed=function(){return [{id:1,title:'매칭 상대 신고 문의',body:'부적절한 프로필을 신고했는데 어떻게 처리되나요?',status:'CLOSED',created:'7월 12일',answered:'7월 13일',answer:'신고해 주신 프로필은 검토 후 이용 제한 조치했어요. 감사합니다.'}];};
+  var items=seed(),nextId=2,selId=null,notif=null;
+  function show(name){['more','list','write','detail'].forEach(function(n){$('s-'+n).classList.toggle('on',n===name);});}
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function renderList(){
+    var h='';
+    if(notif){var it=items.filter(function(x){return x.id===notif;})[0];h+='<button class="xbanner" data-open="'+notif+'"><span class="xicw">'+ic('bell',19)+'</span><div style="min-width:0;flex:1"><p style="margin:0;font-size:12.5px;font-weight:600">운영진 답변이 도착했어요</p><p style="margin:3px 0 0;font-size:11px;color:#8A9096;line-height:1.4">‘'+esc(it.title)+'’ 문의에 답변이 달렸어요</p></div><span class="rc" style="color:#C4C8CE"><span class="chev"></span></span></button>';}
+    if(items.length===0){h+='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:13px;min-height:390px"><div class="xicw" style="width:82px;height:82px">'+ic('messages',38)+'</div><p style="margin:0;font-size:15px;font-weight:600">아직 남긴 문의가 없어요</p><p style="margin:0;font-size:12px;color:#8A9096;line-height:1.6">궁금한 점을 남기면<br>운영진이 확인 후 답변해 드려요</p></div>';}
+    else{h+='<div style="display:flex;flex-direction:column;gap:11px;padding-top:8px">';items.forEach(function(it){var done=it.status==='CLOSED';h+='<button class="xcard" data-open="'+it.id+'"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600">'+esc(it.title)+'</span><span class="xpill '+(done?'xdone':'xwait')+'">'+(done?'답변 완료':'답변 대기')+'</span></div>'+(done?'<p style="margin:8px 0 0;font-size:12px;color:#8A9096;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(it.answer)+'</p>':'')+'<p style="margin:8px 0 0;font-size:11px;color:#B0B4BA">'+it.created+' 등록'+(done?' · '+it.answered+' 답변':'')+'</p></button>';});h+='</div>';}
+    $('listbody').innerHTML=h;
+    Array.prototype.forEach.call($('listbody').querySelectorAll('[data-open]'),function(el){el.onclick=function(){openDetail(+el.getAttribute('data-open'));};});
+  }
+  function openDetail(id){selId=id;if(notif===id)notif=null;renderDetail();show('detail');}
+  function renderDetail(){
+    var it=items.filter(function(x){return x.id===selId;})[0];if(!it)return;var done=it.status==='CLOSED';
+    var h='<div style="display:flex;flex-direction:column;gap:13px;padding-top:8px">';
+    h+='<span class="xpill '+(done?'xdone':'xwait')+'" style="align-self:flex-start">'+(done?'답변 완료':'답변 대기')+'</span>';
+    h+='<div><p style="margin:0;font-size:16px;font-weight:600">'+esc(it.title)+'</p><p style="margin:6px 0 0;font-size:11px;color:#B0B4BA">'+it.created+' 등록</p></div>';
+    h+='<div style="border-top:1px solid #F0F1F3;padding-top:13px"><p style="margin:0;font-size:12px;color:#B0B4BA;font-weight:600">문의 내용</p><p style="margin:8px 0 0;font-size:13px;line-height:1.65">'+esc(it.body)+'</p></div>';
+    if(done){h+='<div style="background:#FFF4EE;border:1px solid #FBE0D5;border-radius:15px;padding:13px"><div style="display:flex;align-items:center;gap:7px"><span class="xicw" style="width:21px;height:21px">'+ic('headset',12)+'</span><span style="font-size:12px;font-weight:600;color:#E24E86">운영자 답변</span></div><p style="margin:9px 0 0;font-size:13px;line-height:1.65">'+esc(it.answer)+'</p><p style="margin:9px 0 0;font-size:11px;color:#B0B4BA">'+it.answered+' 답변</p></div>';
+      h+='<button class="xreset" id="addnew" style="justify-content:center;padding:6px 0;color:#E24E86;font-weight:600">추가 문의 작성하기</button>';}
+    else{h+='<div style="margin-top:6px;background:#FFF6F1;border-radius:15px;padding:20px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px"><span style="color:#FF8FB0">'+ic('clock',25)+'</span><p style="margin:0;font-size:11.5px;color:#8A9096;line-height:1.55">운영진이 확인하고 있어요<br>답변이 도착하면 알림으로 알려드려요</p></div>';
+      h+='<button class="xcta" id="sim" style="margin:6px 0 0;width:100%;height:44px;font-size:13px">운영진 답변 받아보기 (데모)</button>';}
+    h+='</div>';
+    $('detailbody').innerHTML=h;
+    if(done){$('addnew').onclick=function(){openWrite();};}
+    else{$('sim').onclick=function(){it.status='CLOSED';it.answered='방금';it.answer='확인해 보니 결제는 정상 처리되었고 하트도 정상 지급되었어요. 앱을 재실행해 주세요.';notif=it.id;renderList();show('list');};}
+  }
+  function openWrite(){$('ti').value='';$('bo').value='';validate();show('write');setTimeout(function(){$('ti').focus();},50);}
+  function validate(){
+    var t=$('ti').value.length,b=$('bo').value.length,to=t>200,bo=b>2000;
+    $('tc').textContent=t+' / 200';$('tc').style.color=to?'#F0384E':'#B0B4BA';
+    $('bc').textContent=b+' / 2000';$('bc').style.color=bo?'#F0384E':'#B0B4BA';
+    $('ti').classList.toggle('err',to);$('bo').classList.toggle('err',bo);
+    $('terr').classList.toggle('show',to);$('berr').classList.toggle('show',bo);
+    var ok=t>0&&b>0&&!to&&!bo;$('btn-submit').classList.toggle('off',!ok);$('btn-submit').disabled=!ok;return ok;
+  }
+  $('ti').addEventListener('input',validate);$('bo').addEventListener('input',validate);
+  $('list-back').onclick=function(){show('more');};
+  $('btn-new').onclick=openWrite;
+  $('write-close').onclick=function(){renderList();show('list');};
+  $('detail-back').onclick=function(){renderList();show('list');};
+  $('btn-submit').onclick=function(){if(!validate())return;items.unshift({id:nextId++,title:$('ti').value,body:$('bo').value,status:'OPEN',created:'오늘'});renderList();show('list');var t=$('toast');t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1900);};
+  $('reset').onclick=function(){items=seed();nextId=2;selId=null;notif=null;renderMore();renderList();show('more');};
+
+  renderMore();renderNav();renderList();
+})();
+</script>
